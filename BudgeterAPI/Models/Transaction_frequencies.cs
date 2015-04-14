@@ -12,17 +12,9 @@ namespace BudgeterAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Payments_deductions
+    public partial class Transaction_frequencies
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public byte Pay_ded_type_ID { get; set; }
-        public byte Frequency_ID { get; set; }
-        public byte Day { get; set; }
-        public double Amount { get; set; }
-        public Nullable<System.DateTime> Start_date { get; set; }
-    
-        public virtual frequency frequency { get; set; }
-        public virtual payment_deduction_types payment_deduction_types { get; set; }
+        public byte ID { get; set; }
+        public string Description { get; set; }
     }
 }

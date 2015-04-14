@@ -229,41 +229,44 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ForecastController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Payments_deductionsController.cs" />
+    <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
-    <Compile Include="Models\BudgeterModels.Context.cs">
+    <Compile Include="Models\BudgeterERD.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BudgeterModels.Context.tt</DependentUpon>
+      <DependentUpon>BudgeterERD.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\BudgeterModels.cs">
+    <Compile Include="Models\BudgeterERD.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BudgeterModels.tt</DependentUpon>
+      <DependentUpon>BudgeterERD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\BudgeterModels.Designer.cs">
+    <Compile Include="Models\BudgeterERD.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BudgeterModels.edmx</DependentUpon>
+      <DependentUpon>BudgeterERD.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\BudgetViewModels.cs" />
-    <Compile Include="Models\frequency.cs">
-      <DependentUpon>BudgeterModels.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\getforecast_Result.cs">
-      <DependentUpon>BudgeterModels.tt</DependentUpon>
+      <DependentUpon>BudgeterERD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Payments_deductions.cs">
-      <DependentUpon>BudgeterModels.tt</DependentUpon>
+    <Compile Include="Models\Transaction.cs">
+      <DependentUpon>BudgeterERD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\payment_deduction_types.cs">
-      <DependentUpon>BudgeterModels.tt</DependentUpon>
+    <Compile Include="Models\TransactionValue.cs">
+      <DependentUpon>BudgeterERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Transaction_frequencies.cs">
+      <DependentUpon>BudgeterERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Transaction_types.cs">
+      <DependentUpon>BudgeterERD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -279,12 +282,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
@@ -304,26 +301,34 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\BudgeterModels.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BudgeterModels.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\BudgeterModels.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BudgeterModels.edmx</DependentUpon>
-      <LastGenOutput>BudgeterModels.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\BudgeterModels.edmx.diagram">
-      <DependentUpon>BudgeterModels.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\BudgeterModels.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BudgeterModels.edmx</DependentUpon>
-      <LastGenOutput>BudgeterModels.cs</LastGenOutput>
-    </Content>
+    <Content Include="Icon.png" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <EntityDeploy Include="Models\BudgeterERD.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BudgeterERD.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\BudgeterERD.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BudgeterERD.edmx</DependentUpon>
+      <LastGenOutput>BudgeterERD.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\BudgeterERD.edmx.diagram">
+      <DependentUpon>BudgeterERD.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\BudgeterERD.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BudgeterERD.edmx</DependentUpon>
+      <LastGenOutput>BudgeterERD.cs</LastGenOutput>
+    </Content>
+    <None Include="Properties\PublishProfiles\Broke.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\bootstrap.js" />

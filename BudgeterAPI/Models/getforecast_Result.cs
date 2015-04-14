@@ -13,10 +13,12 @@ namespace BudgeterAPI.Models
     
     public partial class getforecast_Result
     {
-        public Nullable<System.DateTime> caldate { get; set; }
-        public string payments_detail { get; set; }
-        public double Total_payments { get; set; }
-        public string deductions_detail { get; set; }
-        public double Total_deductions { get; set; }
+        public Nullable<System.DateTime> CALDATE { get; set; }
+        public Nullable<decimal> TOTAL_PAYMENTS { get; set; }
+        public string PAYMENTS_DETAIL { get; set; }
+        public Nullable<decimal> TOTAL_DEDUCTIONS { get; set; }
+        public string DEDUCTIONS_DETAIL { get; set; }
+        public Nullable<decimal> TOTAL_SAVINGS { get; set; }
+        public string SAVINGS_DETAIL { get; set; }
     }
 }

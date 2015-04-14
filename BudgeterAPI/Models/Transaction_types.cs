@@ -12,16 +12,16 @@ namespace BudgeterAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class frequency
+    public partial class Transaction_types
     {
-        public frequency()
+        public Transaction_types()
         {
-            this.Payments_deductions = new HashSet<Payments_deductions>();
+            this.Transactions = new HashSet<Transaction>();
         }
     
         public byte ID { get; set; }
-        public string Frequency_description { get; set; }
+        public string Description { get; set; }
     
-        public virtual ICollection<Payments_deductions> Payments_deductions { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

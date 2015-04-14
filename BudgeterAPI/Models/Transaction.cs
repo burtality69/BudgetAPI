@@ -12,16 +12,19 @@ namespace BudgeterAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class payment_deduction_types
+    public partial class Transaction
     {
-        public payment_deduction_types()
+        public Transaction()
         {
-            this.Payments_deductions = new HashSet<Payments_deductions>();
+            this.TransactionValues = new HashSet<TransactionValue>();
         }
     
-        public byte ID { get; set; }
-        public string Type_description { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public byte TypeID { get; set; }
+        public string UserID { get; set; }
     
-        public virtual ICollection<Payments_deductions> Payments_deductions { get; set; }
+        public virtual Transaction_types Transaction_types { get; set; }
+        public virtual ICollection<TransactionValue> TransactionValues { get; set; }
     }
 }

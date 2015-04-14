@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Linq;
 using System.Xml.Linq;
 using System.Data.Entity;
 using System.Web;
 using System.Net.Http;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 using BudgeterAPI.Models;
 using System.Xml.Serialization;
 using System.Xml.XPath;
@@ -16,28 +18,40 @@ namespace BudgeterAPI.Controllers
 {
     public class ForecastController : ApiController 
     {
-        private BudgeterEntities db = new BudgeterEntities();
+        private Entities db = new Entities();
 
-        public List<Forecast_viewmodel> GetForecast(DateTime startdate, DateTime enddate,double startbal)
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        public List<Forecast_viewmodel> GetForecast(DateTime startdate, DateTime enddate,decimal startbal)
         {
             //Get the data 
-            IEnumerable<Forecast_viewmodel> result = from p in db.getforecast(startdate, enddate)
+
+            string userid = RequestContext.Principal.Identity.GetUserId();
+
+            IEnumerable<Forecast_viewmodel> result = from p in db.getforecast(startdate, enddate,userid)
                          select new Forecast_viewmodel
                          {
-                             caldate = p.caldate,
-                             total_payments = p.Total_payments,
-                             payment_details = ParsePaydetails(p.payments_detail),
-                             total_deductions = p.Total_deductions,
-                             deduction_details = ParsePaydetails(p.deductions_detail),
+                             caldate = p.CALDATE,
+                             total_payments = p.TOTAL_PAYMENTS,
+                             payment_details = ParsePaydetails(p.PAYMENTS_DETAIL),
+                             total_deductions = p.TOTAL_DEDUCTIONS,
+                             deduction_details = ParsePaydetails(p.DEDUCTIONS_DETAIL),
+                             total_savings = p.TOTAL_SAVINGS,
+                             savings_details = p.SAVINGS_DETAIL
+
                          };
 
             //Create a running total 
             List<Forecast_viewmodel> result2 = result.ToList();
-            var sum = startbal;
+            decimal sum = startbal;
+            decimal sav = 0; 
+
             foreach (var p in result2)
             {
-                sum += ((p.total_payments ?? 0) + ( p.total_deductions ?? 0));
+                sum += ((p.total_payments ?? 0) + (p.total_deductions ?? 0) + (p.total_savings ?? 0));
                 p.balance = sum;
+
+                sav += (p.total_savings * -1) ?? 0;
+                p.total_savings = sav;
             }
 
             return result2;
@@ -46,15 +60,15 @@ namespace BudgeterAPI.Controllers
         private string ParsePaydetails(string xmldoc = default(string))
         {
 
-            if (xmldoc == "<details></details>") { return string.Empty; } //Short circuit
+            if (xmldoc == "<details></details>" || xmldoc ==null) { return string.Empty; } //Short circuit
 
             XElement result = XElement.Parse(xmldoc);
 
-            string csv = (from el in result.Descendants("transaction")
+            string csv = (from el in result.Elements("Transaction")
                           select
                              String.Format("{0}:{1}",
-                                 (string)el.Element("name").Value,
-                                 (string)el.Element("amount").Value,
+                                 (string)el.Element("DESCRIPT").Value,
+                                 (string)el.Element("Amount").Value,
                                  "\n") 
                         ).Aggregate(
                         new StringBuilder(),

@@ -15,10 +15,10 @@ namespace BudgeterAPI.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class BudgeterEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public BudgeterEntities()
-            : base("name=BudgeterEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -27,11 +27,12 @@ namespace BudgeterAPI.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<frequency> frequencies { get; set; }
-        public virtual DbSet<payment_deduction_types> payment_deduction_types { get; set; }
-        public virtual DbSet<Payments_deductions> Payments_deductions { get; set; }
+        public virtual DbSet<Transaction_frequencies> Transaction_frequencies { get; set; }
+        public virtual DbSet<Transaction_types> Transaction_types { get; set; }
+        public virtual DbSet<TransactionValue> TransactionValues { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
     
-        public virtual ObjectResult<getforecast_Result> getforecast(Nullable<System.DateTime> startdate, Nullable<System.DateTime> enddate)
+        public virtual ObjectResult<getforecast_Result> getforecast(Nullable<System.DateTime> startdate, Nullable<System.DateTime> enddate, string uSERID)
         {
             var startdateParameter = startdate.HasValue ?
                 new ObjectParameter("Startdate", startdate) :
@@ -41,7 +42,11 @@ namespace BudgeterAPI.Models
                 new ObjectParameter("enddate", enddate) :
                 new ObjectParameter("enddate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getforecast_Result>("getforecast", startdateParameter, enddateParameter);
+            var uSERIDParameter = uSERID != null ?
+                new ObjectParameter("USERID", uSERID) :
+                new ObjectParameter("USERID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getforecast_Result>("getforecast", startdateParameter, enddateParameter, uSERIDParameter);
         }
     }
 }

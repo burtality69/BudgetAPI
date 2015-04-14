@@ -14,7 +14,7 @@ namespace BudgeterAPI.Controllers
 {
     public class AdminController : ApiController
     {
-        private BudgeterEntities db = new BudgeterEntities();
+        private Entities db = new Entities();
 
         //GET Frequencies 
 
@@ -22,11 +22,11 @@ namespace BudgeterAPI.Controllers
         [Route("api/admin/transactionfrequencies")]
         public IQueryable<Frequency_viewmodel> TransactionFrequencies()
         {
-            IQueryable<Frequency_viewmodel> result = from p in db.frequencies
+            IQueryable<Frequency_viewmodel> result = from p in db.Transaction_frequencies
                                 select new Frequency_viewmodel
                                 {
                                     ID = p.ID,
-                                    Description = p.Frequency_description
+                                    Description = p.Description
                                 };
                 
                 return result; 
@@ -37,11 +37,11 @@ namespace BudgeterAPI.Controllers
         [Route("api/admin/transactiontypes")]
         public IQueryable<PayDedType_viewmodel> TransactionTypes()
         {
-            IQueryable<PayDedType_viewmodel> result = from p in db.payment_deduction_types
+            IQueryable<PayDedType_viewmodel> result = from p in db.Transaction_types
                                                       select new PayDedType_viewmodel
                                                      {
                                                          ID = p.ID,
-                                                         Description = p.Type_description
+                                                         Description = p.Description
                                                      };
 
             return result;
