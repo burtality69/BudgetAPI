@@ -10,18 +10,13 @@
 namespace BudgeterAPI.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Transaction_frequencies
+    public partial class Fn_GetforecastTransactions_Result
     {
-        public Transaction_frequencies()
-        {
-            this.TransactionValues = new HashSet<TransactionValue>();
-        }
-    
-        public byte ID { get; set; }
-        public string Description { get; set; }
-    
-        public virtual ICollection<TransactionValue> TransactionValues { get; set; }
+        public Nullable<int> ID { get; set; }
+        public Nullable<System.DateTime> CALDATE { get; set; }
+        public Nullable<byte> TYPEID { get; set; }
+        public string DESCRIPT { get; set; }
+        public Nullable<decimal> AMOUNT { get; set; }
     }
 }

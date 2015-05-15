@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="81424c1f267247c8bd8f92f244ee5d6b" Name="Diagram1">
+        <EntityTypeShape EntityType="BudgeterModel.Transaction_frequencies" Width="1.5" PointX="4.125" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BudgeterModel.Transaction_types" Width="1.5" PointX="7.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BudgeterModel.TransactionValue" Width="1.5" PointX="1" PointY="0.75" />
+        <AssociationConnector Association="BudgeterModel.Frequency" />
+        <EntityTypeShape EntityType="BudgeterModel.Transaction" Width="1.5" PointX="4" PointY="0.5" />
+        <AssociationConnector Association="BudgeterModel.Transaction_Type" />
+        <AssociationConnector Association="BudgeterModel.Transaction_Values" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

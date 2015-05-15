@@ -18,7 +18,8 @@ namespace BudgeterAPI.Controllers
 {
     public class ForecastController : ApiController 
     {
-        private Entities db = new Entities();
+
+        Entities db = new Entities();
 
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         public List<Forecast_viewmodel> GetForecast(DateTime startdate, DateTime enddate,decimal startbal)
@@ -37,7 +38,6 @@ namespace BudgeterAPI.Controllers
                              deduction_details = ParsePaydetails(p.DEDUCTIONS_DETAIL),
                              total_savings = p.TOTAL_SAVINGS,
                              savings_details = p.SAVINGS_DETAIL
-
                          };
 
             //Create a running total 
@@ -55,11 +55,30 @@ namespace BudgeterAPI.Controllers
             }
 
             return result2;
+
+        }
+
+        [HttpGet]
+        [Route("api/forecast/getbudget")]
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        public IEnumerable<Budget_viewmodel> GetBudget(DateTime startdate, DateTime enddate)
+        {
+
+                string userID = RequestContext.Principal.Identity.GetUserId();
+
+                List<Budget_viewmodel> result = db.sp_getbudgets(startdate,enddate,userID)
+                    .Select(s => new Budget_viewmodel
+                    {
+                        Month = s.Month,
+                        Description = s.Description,
+                        Amount = s.Amount,
+                    }).ToList();
+
+                return result;
         }
 
         private string ParsePaydetails(string xmldoc = default(string))
         {
-
             if (xmldoc == "<details></details>" || xmldoc ==null) { return string.Empty; } //Short circuit
 
             XElement result = XElement.Parse(xmldoc);
@@ -75,7 +94,6 @@ namespace BudgeterAPI.Controllers
                         (sb, s) => sb.Append(s),
                         sb => sb.ToString()
                             );
-
             return csv;
 
         }

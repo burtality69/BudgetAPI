@@ -10,18 +10,11 @@
 namespace BudgeterAPI.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Transaction_frequencies
+    public partial class sp_getbudgets_Result
     {
-        public Transaction_frequencies()
-        {
-            this.TransactionValues = new HashSet<TransactionValue>();
-        }
-    
-        public byte ID { get; set; }
+        public Nullable<System.DateTime> Month { get; set; }
         public string Description { get; set; }
-    
-        public virtual ICollection<TransactionValue> TransactionValues { get; set; }
+        public Nullable<decimal> Amount { get; set; }
     }
 }

@@ -8,12 +8,31 @@ namespace BudgeterAPI.Models
   
     public class vm_Transaction
     {
+        public vm_Transaction() 
+        {
+            this.TransactionValues = new List<vm_TransactionValue>();
+        }
+
         public int ID { get; set; }
         public string Name { get; set; }
         public byte TypeID { get; set; }
         public string TypeDescription { get; set; }
         public string UserID { get; set; }
-        public IEnumerable<vm_TransactionValue> TransactionValues { get; set; } 
+        public List<vm_TransactionValue> TransactionValues { get; set; }
+
+        public static implicit operator vm_Transaction(Transaction t)
+
+        {
+            var vm = new vm_Transaction
+            {
+                ID = t.ID,
+                Name = t.Name,
+                TypeID = t.TypeID,
+                UserID = t.UserID
+            };
+
+            return vm; 
+        }
     }
 
     public class vm_TransactionValue 
@@ -24,8 +43,24 @@ namespace BudgeterAPI.Models
         public byte FrequencyID { get; set; }
         public string FrequencyDescription { get; set; }
         public Nullable<byte> Day { get; set; }
-        public System.DateTime Start_date { get; set; }
-        public Nullable<System.DateTime> End_date { get; set; }
+        public DateTime Start_date { get; set; }
+        public Nullable<DateTime> End_date { get; set; }
+
+        public static implicit operator vm_TransactionValue(TransactionValue tv)
+        {
+            var vm = new vm_TransactionValue
+            {
+                Start_date = tv.Start_date,
+                FrequencyID = tv.FrequencyID,
+                TransactionID = tv.TransactionID,
+                Day = tv.Day,
+                End_date = tv.End_date,
+                ID = tv.Id,
+                Value = tv.Value
+            };
+
+            return vm;
+        }
     }
 
     public class Forecast_viewmodel
@@ -39,5 +74,12 @@ namespace BudgeterAPI.Models
         public decimal? total_savings { get; set; }
         public decimal balance { get; set; }
         public decimal savings { get; set; }
+    }
+
+    public class Budget_viewmodel
+    {
+        public Nullable<System.DateTime> Month { get; set; }
+        public string Description { get; set; }
+        public Nullable<decimal> Amount { get; set; }
     }
 }

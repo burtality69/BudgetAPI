@@ -48,5 +48,40 @@ namespace BudgeterAPI.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getforecast_Result>("getforecast", startdateParameter, enddateParameter, uSERIDParameter);
         }
+    
+        [DbFunction("Entities", "Fn_GetforecastTransactions")]
+        public virtual IQueryable<Fn_GetforecastTransactions_Result> Fn_GetforecastTransactions(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE, string uSERID)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            var uSERIDParameter = uSERID != null ?
+                new ObjectParameter("USERID", uSERID) :
+                new ObjectParameter("USERID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Fn_GetforecastTransactions_Result>("[Entities].[Fn_GetforecastTransactions](@STARTDATE, @ENDDATE, @USERID)", sTARTDATEParameter, eNDDATEParameter, uSERIDParameter);
+        }
+    
+        public virtual ObjectResult<sp_getbudgets_Result> sp_getbudgets(Nullable<System.DateTime> startdate, Nullable<System.DateTime> enddate, string user)
+        {
+            var startdateParameter = startdate.HasValue ?
+                new ObjectParameter("startdate", startdate) :
+                new ObjectParameter("startdate", typeof(System.DateTime));
+    
+            var enddateParameter = enddate.HasValue ?
+                new ObjectParameter("enddate", enddate) :
+                new ObjectParameter("enddate", typeof(System.DateTime));
+    
+            var userParameter = user != null ?
+                new ObjectParameter("user", user) :
+                new ObjectParameter("user", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getbudgets_Result>("sp_getbudgets", startdateParameter, enddateParameter, userParameter);
+        }
     }
 }

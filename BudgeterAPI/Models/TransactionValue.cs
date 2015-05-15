@@ -12,16 +12,17 @@ namespace BudgeterAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Transaction_frequencies
+    public partial class TransactionValue
     {
-        public Transaction_frequencies()
-        {
-            this.TransactionValues = new HashSet<TransactionValue>();
-        }
+        public int Id { get; set; }
+        public int TransactionID { get; set; }
+        public double Value { get; set; }
+        public byte FrequencyID { get; set; }
+        public Nullable<byte> Day { get; set; }
+        public System.DateTime Start_date { get; set; }
+        public System.DateTime End_date { get; set; }
     
-        public byte ID { get; set; }
-        public string Description { get; set; }
-    
-        public virtual ICollection<TransactionValue> TransactionValues { get; set; }
+        public virtual Transaction_frequencies Transaction_frequencies { get; set; }
+        public virtual Transaction Transactions { get; set; }
     }
 }
